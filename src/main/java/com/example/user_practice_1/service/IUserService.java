@@ -8,7 +8,7 @@ public interface IUserService {
     public List<UserDto> findAll();
     public UserDto findById(int userId);
     public UserDto save(UserDto user);
-    public UserDto update(int userId, UserDto userDto);
-    public UserDto partialUpdate(int userId, UserDto userDto);
-    public void deleteById(int userId);
+    public void update(int userId, UserDto userDto);
+    public void partialUpdate(int userId, UserDto userDto);
+    public boolean deleteById(int userId);
 }

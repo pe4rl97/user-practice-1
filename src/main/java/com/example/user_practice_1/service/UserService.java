@@ -69,7 +69,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public UserDto update(int userId, UserDto updateUserDto) {
+    public void update(int userId, UserDto updateUserDto) {
         UserDto matchingUserDto = findById(userId);
         if (matchingUserDto == null) {
             throw new UserNotFoundException("User with id " + updateUserDto.getUserId() + " not found.");
@@ -81,12 +81,11 @@ public class UserService implements IUserService{
         }
 
         updateUserDto.setUserId(userId);
-        User updatedUser = userRepository.save(modelMapper.map(updateUserDto, User.class));
-        return modelMapper.map(updatedUser, UserDto.class);
+        userRepository.save(modelMapper.map(updateUserDto, User.class));
     }
 
     @Override
-    public UserDto partialUpdate(int userId, UserDto updateUserDto) {
+    public void partialUpdate(int userId, UserDto updateUserDto) {
         UserDto matchingUserDto = findById(userId);
         if (matchingUserDto != null) {
             if (updateUserDto.getUserName() != null) {
@@ -104,13 +103,16 @@ public class UserService implements IUserService{
         } else {
             throw new UserNotFoundException("User with id" + updateUserDto + " not found.");
         }
-        User updatedUser = userRepository.save(modelMapper.map(matchingUserDto, User.class));
-        return modelMapper.map(updatedUser, UserDto.class);
+        userRepository.save(modelMapper.map(matchingUserDto, User.class));
     }
 
     @Override
-    public void deleteById(int userId) {
-        findById(userId);
+    public boolean deleteById(int userId) {
+        UserDto user = findById(userId);
+        if (user == null) {
+            return false;
+        }
         userRepository.deleteById(userId);
+        return true;
     }
 }

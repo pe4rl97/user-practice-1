@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class UserDto {
     private int userId;
-    @Pattern(regexp = "^[a-zA-Z. ]+$", message = "")
+    @Pattern(regexp = "^[a-zA-Z. ]+$", message = "Name must contain alphabets, period(.) and spaces only")
     private String userName;
     @Min(value = 18, message = "Age should be at least 18.")
     @Max(value = 100, message = "Age should not exceed 100.")
